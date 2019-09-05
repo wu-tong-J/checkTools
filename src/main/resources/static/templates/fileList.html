@@ -1,0 +1,248 @@
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <input type="button" onclick="exportExcel()" value="导出Excel" class="btn btn-sm btn-success"
+                           style="margin-top: -3px;"/>
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion"
+                                       href="#collapseOne">
+                                        条件检索
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <h3 class="box-title">日期范围</h3>
+                                    <input type="text" id="dateRange" class="form-control" style="width: 249px;display: inline;">
+                                    <h3 class="box-title" style="margin-left: 12px;">关键字</h3>
+                                    <input type="text" class="form-control" id="key" placeholder="档号" style="width: 300px;display: inline;"/>
+                                    <input type="text" class="form-control" id="tit" placeholder="题名" style="width: 300px;display: inline;"/>
+                                    <input type="hidden" id="sql">
+                                    <input type="text" class="form-control" id="err" placeholder="错误信息" style="width: 300px;display: inline;"/>
+                                    <input type="button" id="reget" value="查看" class="btn btn btn-primary"
+                                           style="margin-top: -3px;"/>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion"
+                                       href="#collapseTwo">
+                                        显示字段
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div>
+                                        <input type="checkbox" id="ch0" value="dataly" checked
+                                               style="margin-left: 5px">数据来源
+                                        <input type="checkbox" id="ch1" value="filefield" checked
+                                               style="margin-left: 5px">空格或特殊符号
+                                        <input type="checkbox" id="ch2" value="unitsys" checked
+                                               style="margin-left: 5px">全宗号
+                                        <input type="checkbox" id="ch3" value="unitname" checked
+                                               style="margin-left: 5px">全宗名称
+                                        <input type="checkbox" id="ch4" value="keyword" checked
+                                               style="margin-left: 5px">档号
+                                        <input type="checkbox" id="ch5" value="wenhao" checked
+                                               style="margin-left: 5px">文件编号
+                                        <input type="checkbox" id="ch6" value="title" checked
+                                               style="margin-left: 5px">题名
+                                        <input type="checkbox" id="ch7" value="zrz" checked
+                                               style="margin-left: 5px">责任者
+                                        <input type="checkbox" id="ch8" value="flh" checked
+                                               style="margin-left: 5px">分类号
+                                        <input type="checkbox" id="ch9" value="flmc" checked
+                                               style="margin-left: 5px">分类名称
+                                        <input type="checkbox" id="ch10" value="mj" checked
+                                               style="margin-left: 5px">密级
+                                        <input type="checkbox" id="ch11" value="bmqx" checked
+                                               style="margin-left: 5px">保密期限
+                                        <input type="checkbox" id="ch12" value="szhsm" checked
+                                               style="margin-left: 5px">数字化说明
+                                        <input type="checkbox" id="ch13" value="pagenum" checked
+                                               style="margin-left: 5px">页数
+                                        <input type="checkbox" id="ch14" value="yh" checked
+                                               style="margin-left: 5px">页号
+                                        <input type="checkbox" id="ch15" value="hfs" checked
+                                               style="margin-left: 5px">画幅数
+                                        <input type="checkbox" id="ch16" value="keywordresult" checked
+                                               style="margin-left: 5px">档号检测结果
+                                        <input type="checkbox" id="ch17" value="titleresult" checked
+                                               style="margin-left: 5px">题名检测结果
+                                        <input type="checkbox" id="ch18" value="createtime" checked
+                                               style="margin-left: 5px">操作时间
+                                        <input type="checkbox" id="ch19" value="bkb" checked
+                                               style="margin-left: 5px">备考表
+                                        <input type="checkbox" id="ch20" value="libname" checked
+                                               style="margin-left: 5px">档案类型
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="fileTable" class="table table-bordered table-striped dataTable nowrap">
+                        <thead>
+                        <tr>
+                            <th>数据来源</th>
+                            <th>空格或特殊符号</th>
+                            <th>全宗号</th>
+                            <th>全宗名称</th>
+                            <th>案卷档号</th>
+                            <th>文号</th>
+                            <th>题名</th>
+                            <th>责任者</th>
+                            <th>分类号</th>
+                            <th>分类名称</th>
+                            <th>密级</th>
+                            <th>保密期限</th>
+                            <th>数字化说明</th>
+                            <th>页数</th>
+                            <th>页号</th>
+                            <th>画幅数</th>
+                            <th>档号检测结果</th>
+                            <th>题名检测结果</th>
+                            <th>操作时间</th>
+                            <th>备考表</th>
+                            <th>档案类型</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
+<script>
+    $(document).ready(function() {
+        laydate.render({
+            elem: '#dateRange'
+            ,type: 'datetime'
+            ,range: '~'
+        });
+
+        var table = $('#fileTable').DataTable( {
+            dom: 'Blfrtip',
+            "colReorder": true,
+            stateSave: true,
+            stateDuration: 0,//Use localStorage,-1使用sessionStorage
+            stateSaveCallback: function(settings,data) {
+                localStorage.setItem( 'DataTables_' + settings.sInstance, JSON.stringify(data) )
+            },
+            stateLoadCallback: function(settings) {
+                return JSON.parse( localStorage.getItem( 'DataTables_' + settings.sInstance ) )
+            },
+            buttons: [
+                {
+                    extend: 'colvis',
+                    text: '显示字段',
+                    collectionLayout: 'fixed four-column'
+                },
+                { text: '重置字段状态',   action: function () {table.state.clear();window.location.reload();} },
+            ],
+            "ajax": {
+                "url": "/zky/check/getCheckData",
+                "data": function ( d ) {
+                    d.arcLvl = "file";
+                    d.whereStr = $("#dateRange").val();
+                    d.ifHistory = "0";
+                    d.whereSql = $("#sql").val();
+                    d.whereErr = $("#err").val();
+                },
+                "type":"post"
+            },
+            "serverSide": true,
+            "columns": [
+                { "data": "dataly" },
+                { "data": "filefield" },
+                { "data": "unitsys" },
+                { "data": "unitname" },
+                { "data": "keyword" },
+                { "data": "wenhao" },
+                { "data": "title" },
+                { "data": "zrz" },
+                { "data": "flh" },
+                { "data": "flmc" },
+                { "data": "mj" },
+                { "data": "bmqx" },
+                { "data": "szhsm" },
+                { "data": "pagenum" },
+                { "data": "yh" },
+                { "data": "hfs" },
+                { "data": "keywordresult" },
+                { "data": "titleresult" },
+                { "data": "createtime" },
+                {"data": "bkb"},
+                {"data": "libname"}
+            ],
+            "language": {
+                url:'/bower_components/datatables.net/chinese.json'
+            },
+            "order": [[ 18, "desc" ]],
+            'paging'      : true,
+            "processing": true,
+            'lengthChange': true,
+            'searching'   : false,
+            'ordering'    : true,
+            'autoWidth'   : true,
+            "scrollX": true
+        } );
+
+        $("#reget").click(function () {
+            //处理条件检索
+            setSql();
+            table.draw();
+        });
+    } );
+    function setSql() {
+        var key = $("#key").val();
+        var tit = $("#tit").val();
+        var sql = "";
+        if (key != "") {
+            if (sql != "") {
+                sql = sql + " or ";
+            }
+            sql = sql + "keyword like '%25" + key + "%25'";
+        }
+        if (tit != "") {
+            if (sql != "") {
+                sql = sql + " or ";
+            }
+            sql = sql + "title like '%25" + tit + "%25'";
+        }
+        $("#sql").val(sql);
+    }
+    function dis(num) {
+        var b = $("#ch"+num).prop("checked");
+        $('#example').DataTable().column(num).visible(b);
+    }
+    function exportExcel() {
+        setSql();
+        var whereStr = $("#dateRange").val();
+        var sql = $("#sql").val();
+        var err = $("#err").val();
+        var thArr = $("#fileTable th");
+        var displayFie = "";
+        for(var i=0;i<thArr.length;i++){
+            var ariaLabel = thArr[i].getAttribute("aria-label");
+            var text = ariaLabel.split(": ")[0];
+            displayFie = displayFie+text+"@";
+        }
+        window.location.href = "/zky/exportExcel/log?manu=file&arcLvl=file&ifHistory=0&whereStr="+whereStr+"&whereSql="+sql+"&whereErr="+err+"&displayFie="+displayFie;
+    }
+</script>

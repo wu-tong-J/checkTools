@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.unis.zkydatadetection.mapper.result10001Mapper" >
+  <resultMap id="BaseResultMap" type="com.unis.zkydatadetection.model.file10001result" >
+    <id column="syscode" property="syscode" jdbcType="VARCHAR" />
+    <result column="libcode" property="libcode" jdbcType="VARCHAR" />
+    <result column="unitsys" property="unitsys" jdbcType="VARCHAR" />
+    <result column="archivetype" property="archivetype" jdbcType="VARCHAR" />
+    <result column="filename" property="filename" jdbcType="VARCHAR" />
+    <result column="filepath" property="filepath" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="errormessage" property="errormessage" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+    <result column="psyscode" property="psyscode" jdbcType="VARCHAR" />
+    <result column="prjsys" property="prjsys" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    syscode, libcode, unitsys, archivetype, filename, filepath, status, errormessage, 
+    remark, createtime, psyscode, prjsys
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from s_file1_0001_result
+    where syscode = #{syscode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from s_file1_0001_result
+    where syscode = #{syscode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.unis.zkydatadetection.model.file10001result" >
+    insert into s_file1_0001_result (syscode, libcode, unitsys, 
+      archivetype, filename, filepath, 
+      status, errormessage, remark, 
+      createtime, psyscode, prjsys)
+    values (#{syscode,jdbcType=VARCHAR}, #{libcode,jdbcType=VARCHAR}, #{unitsys,jdbcType=VARCHAR}, 
+      #{archivetype,jdbcType=VARCHAR}, #{filename,jdbcType=VARCHAR}, #{filepath,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{errormessage,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=VARCHAR},#{psyscode,jdbcType=VARCHAR},#{prjsys,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.unis.zkydatadetection.model.file10001result" >
+    insert into s_file1_0001_result
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="syscode != null" >
+        syscode,
+      </if>
+      <if test="libcode != null" >
+        libcode,
+      </if>
+      <if test="unitsys != null" >
+        unitsys,
+      </if>
+      <if test="archivetype != null" >
+        archivetype,
+      </if>
+      <if test="filename != null" >
+        filename,
+      </if>
+      <if test="filepath != null" >
+        filepath,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="errormessage != null" >
+        errormessage,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="psyscode != null" >
+        psyscode,
+      </if>
+      <if test="prjsys != null" >
+        prjsys,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="syscode != null" >
+        #{syscode,jdbcType=VARCHAR},
+      </if>
+      <if test="libcode != null" >
+        #{libcode,jdbcType=VARCHAR},
+      </if>
+      <if test="unitsys != null" >
+        #{unitsys,jdbcType=VARCHAR},
+      </if>
+      <if test="archivetype != null" >
+        #{archivetype,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null" >
+        #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null" >
+        #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="errormessage != null" >
+        #{errormessage,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="psyscode != null" >
+        #{psyscode,jdbcType=VARCHAR},
+      </if>
+      <if test="prjsys != null" >
+        #{prjsys,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.unis.zkydatadetection.model.file10001result" >
+    update s_file1_0001_result
+    <set >
+      <if test="libcode != null" >
+        libcode = #{libcode,jdbcType=VARCHAR},
+      </if>
+      <if test="unitsys != null" >
+        unitsys = #{unitsys,jdbcType=VARCHAR},
+      </if>
+      <if test="archivetype != null" >
+        archivetype = #{archivetype,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null" >
+        filename = #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null" >
+        filepath = #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="errormessage != null" >
+        errormessage = #{errormessage,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="psyscode != null" >
+        psyscode = #{psyscode,jdbcType=VARCHAR},
+      </if>
+      <if test="prjsys != null" >
+        prjsys = #{prjsys,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where syscode = #{syscode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unis.zkydatadetection.model.file10001result" >
+    update s_file1_0001_result
+    set libcode = #{libcode,jdbcType=VARCHAR},
+      unitsys = #{unitsys,jdbcType=VARCHAR},
+      archivetype = #{archivetype,jdbcType=VARCHAR},
+      filename = #{filename,jdbcType=VARCHAR},
+      filepath = #{filepath,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      errormessage = #{errormessage,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=VARCHAR}
+      psyscode = #{psyscode,jdbcType=VARCHAR}
+      prjsys = #{prjsys,jdbcType=VARCHAR}
+    where syscode = #{syscode,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,67 @@
+
+server:
+  port: 8081
+  tomcat:
+    basedir: /data/apps/temp
+
+spring:
+    datasource:
+        name: test
+        url: jdbc:mysql://127.0.0.1:3306/zkydatadetection?useUnicode=true&characterEncoding=UTF-8
+        username: root
+        password: root
+        # 使用druid数据源
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        filters: stat
+        maxActive: 20
+        initialSize: 1
+        maxWait: 60000
+        minIdle: 1
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: select 'x'
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxOpenPreparedStatements: 20
+
+## 该配置节点为独立的节点，有很多同学容易将这个配置放在spring的节点下，导致配置无法被识别
+mybatis:
+  mapper-locations: classpath:mapping/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  type-aliases-package: com.unis.zkydatadetection.model
+
+logging:
+  config: classpath:logback.xml
+  level:org.mybatis: debug
+  level:com.unis.zkydatadetection.service: debug
+
+#pagehelper分页插件
+#pagehelper:
+#    helperDialect: mysql
+#    reasonable: true
+#    supportMethodsArguments: true
+#    params: count=countSql
+
+filepath: E:/temp/
+office: .doc,.docx,.xls,.xlsx,ppt,.pptx
+video: .avi,.mp4,.wmv,.rm,.rmvb,.flv
+audio: .mp3,.wav,.wma,.flac
+image: .jpg,.png,.gif,.bmp,.tif
+
+checkVolfield: volfield@字段特殊符号检测,unitsys@全宗号,unitname@全宗名称,keyword@档号,keywordresult@档号检测结果,title@题名,titleresult@题名检测结果,zrz@责任者,flh@分类号,flmc@分类名称,qsrq@起始日期,zzrq@终止日期,zjs@总件数,zys@总页数,hfs@总画幅数,yh@页号,mj@密级,bmqx@保密期限,szhsm@数字化情况说明,createtime@检测时间,kytitle@课题题名,ssxk@所属学科,szmc@室组名称,ktbh@课题编号,ktfzr@课题负责人,ktcjr@课题参加人,ktxzdw@课题协助单位,rwly@任务来源,gjj@共几卷,djj@第几卷,libname@档案门类,dataly@数据来源
+checkFilefield: filefield@字段特殊符号检测,unitsys@全宗号,unitname@全宗名称,keyword@档号,keywordresult@档号检测结果,title@题名,titleresult@题名检测结果,wenhao@文件编号,zrz@责任者,flh@分类号,flmc@分类名称,mj@密级,bmqx@保密期限,szhsm@数字化情况说明,pagenum@页数,hfs@画幅数,yh@页号,createtime@检测时间,bkb@备考表,libname@档案门类,dataly@数据来源
+checkEfilefield: efilepath@文件路径,efilepathresult@文件路径检测结果,efilename@文件名称,efilenameResult@文件名称检测结果,efilesize@文件大小,wjzt@文件状态,efilegs@文件格式,sc@时长,spml@视频码率,btl@比特率,cyl@采样率,fbl@分辨率,xs@像素,title@所属文件题名,keyword@所属文件档号,createtime@检测时间,libname@档案门类,dataly@数据来源
+checkSipfield: volzdfh@sip案卷字段特殊符号检测,filezdfh@sip文件字段特殊符号检测,voltitle@所属案件题名,filetitle@所属文件题名,sipfilepath@sip包所在路径,sipfilename@sip包名称,digital@数字摘要,dzwj@电子文件状态,parserSip@sip包是否可解析,efileStatus@sip包内是否有电子文件,createtime@检测时间,title@文件题名,libname@档案门类
+statfield: libname@档案门类,ly@来源目录,volnum@案卷数量,zjs@文件数量,zys@总页数之和,zhfs@总画幅数之和,mjnum@卷数,mjjs@件数,mjys@页数,mjhfs@画幅数,fileEnum@电子文件数,ext@电子文件格式,A4down@A4以下,A3up@A3以上,A3A4@A3至A4
+logfield: libcode@档案门类,username@用户账号,content@操作内容,createtime@操作时间
+
+checktype: c1@真实性检查,c3@完整性检查,c5@页数页号检查,c6@数字化情况检查,c7@科研档案案卷目录检查,c8@页数画幅数汇总统计,c9@可用性检查
+
+sc:
+spml:
+btl:
+cyl:
+fbl:
+xs:

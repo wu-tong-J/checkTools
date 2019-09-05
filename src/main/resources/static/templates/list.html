@@ -1,0 +1,73 @@
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">日期范围</h3>
+                    <input type="text" id="dateRange" style="width: 246px"><br><br>
+                    <h3 class="box-title">显示字段</h3>
+                    <div>
+                        <input type="checkbox" id="ch0" onclick="dis(0)" checked>Name
+                        <input type="checkbox" id="ch1" onclick="dis(1)" checked style="margin-left: 5px">Position
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example" class="table table-bordered table-striped white-space: nowrap;" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Extn.</th>
+                            <th>Start date</th>
+                            <th>Salary</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
+<script>
+    $(document).ready(function() {
+        laydate.render({
+            elem: '#dateRange'
+            ,type: 'datetime'
+            ,range: '~'
+        });
+
+        $('#example').DataTable( {
+            "ajax": "/templates/data.txt",
+            "serverSide": true,
+            "columns": [
+                { "data": "name" },
+                { "data": "position" },
+                { "data": "office" },
+                { "data": "extn" },
+                { "data": "start_date" },
+                { "data": "salary" }
+            ],
+            "language": {
+                url:'/bower_components/datatables.net/chinese.json'
+            },
+            'paging'      : true,
+            'lengthChange': true,
+            'searching'   : false,
+            'ordering'    : true,
+            'autoWidth'   : true,
+            "scrollX": true,
+            "autoWidth":true,
+        } );
+    } );
+    function dis(num) {
+        var b = $("#ch"+num).prop("checked");
+        $('#example').DataTable().column(num).visible(b);
+    }
+</script>

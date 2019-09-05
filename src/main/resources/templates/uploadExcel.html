@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title></title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}"/>
+</head>
+<body>
+<h1 th:text="${msg}"></h1>
+<form action="/zky/upload/excel" method="post" enctype="multipart/form-data">
+    <input type="file" name="files">
+    <input type="submit" value="上传">
+    <input type="hidden" name="libcode" value="1">
+</form>
+</body>
+</html>

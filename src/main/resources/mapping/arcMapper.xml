@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.unis.zkydatadetection.mapper.arcMapper" >
+  <resultMap id="BaseResultMap" type="com.unis.zkydatadetection.model.arc" >
+    <id column="syscode" property="syscode" jdbcType="VARCHAR" />
+    <result column="libcode" property="libcode" jdbcType="INTEGER" />
+    <result column="chname" property="chname" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    syscode, libcode, chname, status, createtime, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from s_arc
+    where syscode = #{syscode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from s_arc
+    where syscode = #{syscode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.unis.zkydatadetection.model.arc" >
+    insert into s_arc (syscode, libcode, chname, 
+      status, createtime, remark
+      )
+    values (#{syscode,jdbcType=VARCHAR}, #{libcode,jdbcType=INTEGER}, #{chname,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{createtime,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.unis.zkydatadetection.model.arc" >
+    insert into s_arc
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="syscode != null" >
+        syscode,
+      </if>
+      <if test="libcode != null" >
+        libcode,
+      </if>
+      <if test="chname != null" >
+        chname,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="syscode != null" >
+        #{syscode,jdbcType=VARCHAR},
+      </if>
+      <if test="libcode != null" >
+        #{libcode,jdbcType=INTEGER},
+      </if>
+      <if test="chname != null" >
+        #{chname,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.unis.zkydatadetection.model.arc" >
+    update s_arc
+    <set >
+      <if test="libcode != null" >
+        libcode = #{libcode,jdbcType=INTEGER},
+      </if>
+      <if test="chname != null" >
+        chname = #{chname,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where syscode = #{syscode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unis.zkydatadetection.model.arc" >
+    update s_arc
+    set libcode = #{libcode,jdbcType=INTEGER},
+      chname = #{chname,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where syscode = #{syscode,jdbcType=VARCHAR}
+  </update>
+</mapper>

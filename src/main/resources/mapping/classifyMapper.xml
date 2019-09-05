@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.unis.zkydatadetection.mapper.classifyMapper" >
+  <resultMap id="BaseResultMap" type="com.unis.zkydatadetection.model.classify" >
+    <id column="syscode" property="syscode" jdbcType="VARCHAR" />
+    <result column="classtypesys" property="classtypesys" jdbcType="VARCHAR" />
+    <result column="classtype" property="classtype" jdbcType="VARCHAR" />
+    <result column="classname" property="classname" jdbcType="VARCHAR" />
+    <result column="classcode" property="classcode" jdbcType="INTEGER" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="libcode" property="libcode" jdbcType="INTEGER" />
+    <result column="unitsys" property="unitsys" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    syscode, classtypesys, classtype, classname, classcode, version, libcode, unitsys, 
+    createtime, status, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from s_classify
+    where syscode = #{syscode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from s_classify
+    where syscode = #{syscode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.unis.zkydatadetection.model.classify" >
+    insert into s_classify (syscode, classtypesys, classtype, 
+      classname, classcode, version, 
+      libcode, unitsys, createtime, 
+      status, remark)
+    values (#{syscode,jdbcType=VARCHAR}, #{classtypesys,jdbcType=VARCHAR}, #{classtype,jdbcType=VARCHAR}, 
+      #{classname,jdbcType=VARCHAR}, #{classcode,jdbcType=INTEGER}, #{version,jdbcType=VARCHAR}, 
+      #{libcode,jdbcType=INTEGER}, #{unitsys,jdbcType=VARCHAR}, #{createtime,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.unis.zkydatadetection.model.classify" >
+    insert into s_classify
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="syscode != null" >
+        syscode,
+      </if>
+      <if test="classtypesys != null" >
+        classtypesys,
+      </if>
+      <if test="classtype != null" >
+        classtype,
+      </if>
+      <if test="classname != null" >
+        classname,
+      </if>
+      <if test="classcode != null" >
+        classcode,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="libcode != null" >
+        libcode,
+      </if>
+      <if test="unitsys != null" >
+        unitsys,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="syscode != null" >
+        #{syscode,jdbcType=VARCHAR},
+      </if>
+      <if test="classtypesys != null" >
+        #{classtypesys,jdbcType=VARCHAR},
+      </if>
+      <if test="classtype != null" >
+        #{classtype,jdbcType=VARCHAR},
+      </if>
+      <if test="classname != null" >
+        #{classname,jdbcType=VARCHAR},
+      </if>
+      <if test="classcode != null" >
+        #{classcode,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="libcode != null" >
+        #{libcode,jdbcType=INTEGER},
+      </if>
+      <if test="unitsys != null" >
+        #{unitsys,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.unis.zkydatadetection.model.classify" >
+    update s_classify
+    <set >
+      <if test="classtypesys != null" >
+        classtypesys = #{classtypesys,jdbcType=VARCHAR},
+      </if>
+      <if test="classtype != null" >
+        classtype = #{classtype,jdbcType=VARCHAR},
+      </if>
+      <if test="classname != null" >
+        classname = #{classname,jdbcType=VARCHAR},
+      </if>
+      <if test="classcode != null" >
+        classcode = #{classcode,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="libcode != null" >
+        libcode = #{libcode,jdbcType=INTEGER},
+      </if>
+      <if test="unitsys != null" >
+        unitsys = #{unitsys,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where syscode = #{syscode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unis.zkydatadetection.model.classify" >
+    update s_classify
+    set classtypesys = #{classtypesys,jdbcType=VARCHAR},
+      classtype = #{classtype,jdbcType=VARCHAR},
+      classname = #{classname,jdbcType=VARCHAR},
+      classcode = #{classcode,jdbcType=INTEGER},
+      version = #{version,jdbcType=VARCHAR},
+      libcode = #{libcode,jdbcType=INTEGER},
+      unitsys = #{unitsys,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where syscode = #{syscode,jdbcType=VARCHAR}
+  </update>
+</mapper>

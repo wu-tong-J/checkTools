@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.unis.zkydatadetection.mapper.paramMapper" >
+  <resultMap id="BaseResultMap" type="com.unis.zkydatadetection.model.param" >
+    <id column="syscode" property="syscode" jdbcType="VARCHAR" />
+    <result column="paramcode" property="paramcode" jdbcType="VARCHAR" />
+    <result column="paramname" property="paramname" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    syscode, paramcode, paramname, code, name, version, createtime, status, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from s_param
+    where syscode = #{syscode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from s_param
+    where syscode = #{syscode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.unis.zkydatadetection.model.param" >
+    insert into s_param (syscode, paramcode, paramname, 
+      code, name, version, 
+      createtime, status, remark
+      )
+    values (#{syscode,jdbcType=VARCHAR}, #{paramcode,jdbcType=VARCHAR}, #{paramname,jdbcType=VARCHAR}, 
+      #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.unis.zkydatadetection.model.param" >
+    insert into s_param
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="syscode != null" >
+        syscode,
+      </if>
+      <if test="paramcode != null" >
+        paramcode,
+      </if>
+      <if test="paramname != null" >
+        paramname,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="syscode != null" >
+        #{syscode,jdbcType=VARCHAR},
+      </if>
+      <if test="paramcode != null" >
+        #{paramcode,jdbcType=VARCHAR},
+      </if>
+      <if test="paramname != null" >
+        #{paramname,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.unis.zkydatadetection.model.param" >
+    update s_param
+    <set >
+      <if test="paramcode != null" >
+        paramcode = #{paramcode,jdbcType=VARCHAR},
+      </if>
+      <if test="paramname != null" >
+        paramname = #{paramname,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where syscode = #{syscode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unis.zkydatadetection.model.param" >
+    update s_param
+    set paramcode = #{paramcode,jdbcType=VARCHAR},
+      paramname = #{paramname,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      version = #{version,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where syscode = #{syscode,jdbcType=VARCHAR}
+  </update>
+</mapper>

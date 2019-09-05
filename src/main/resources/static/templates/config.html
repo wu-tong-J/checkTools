@@ -1,0 +1,444 @@
+<section class="content">
+    <form role="form" id="configForm">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <input type="hidden" name="configs[0].name" value="字段检测">
+                <input type="hidden" name="configs[1].name" value="案卷题名与卷内题名是否重复检查">
+                <input type="hidden" name="configs[2].name" value="题名中全部为英文字符检查">
+                <input type="hidden" name="configs[3].name" value="责任者检查">
+                <input type="hidden" name="configs[4].name" value="日期格式检查">
+                <input type="hidden" name="configs[5].name" value="特殊字符检查">
+                <input type="hidden" name="configs[6].name" value="案卷目录密级为对应卷内目录最高密级">
+                <input type="hidden" name="configs[7].name" value="卷内顺序号检查">
+                <input type="hidden" name="configs[8].name" value="数量一致性检查">
+                <input type="hidden" name="configs[9].name" value="存储结构检查">
+                <input type="hidden" name="configs[10].name" value="电子文件命名规则检查">
+                <input type="hidden" name="configs[11].name" value="电子文件属性统计">
+                <input type="hidden" name="configs[12].name" value="图像正确格式">
+                <input type="hidden" name="configs[13].name" value="文档正确格式">
+                <input type="hidden" name="configs[14].name" value="音频正确格式">
+                <input type="hidden" name="configs[15].name" value="视频正确格式">
+                <input type="hidden" name="configs[16].name" value="检查全宗号、全宗名称是否一致">
+                <input type="hidden" name="configs[17].name" value="检查案卷目录中全宗号、全宗名称与卷内目录的全宗号、全宗名称是否一致">
+                <input type="hidden" name="configs[18].name" value="检查分类号、分类名称是否一致">
+                <input type="hidden" name="configs[19].name" value="检查案卷目录中分类号、分类名称与卷内目录的分类号、分类名称是否一致">
+                <input type="hidden" name="configs[20].name" value="题名长度">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">真实性检查</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <div class="box-body">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="1" name="configs[1].checkStatus" {{#if
+                                            this.案卷题名与卷内题名是否重复检查.checkStatus}}checked="checked" {{/if}}>
+                                    案卷题名与卷内题名是否重复检查
+                                </label>
+                                <label>
+                                    <input type="checkbox" value="1" name="configs[2].checkStatus" {{#if
+                                            this.题名中全部为英文字符检查.checkStatus}}checked="checked" {{/if}}>
+                                    题名中全部为英文字符检查
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="check1" value="1"
+                                           name="configs[3].checkStatus" {{#if
+                                            this.责任者检查.checkStatus}}checked="checked" {{/if}}> 责任者检查
+                                </label>
+                                <label>
+                                    <input type="text" class="form-control" value="{{this.责任者检查.content}}"
+                                           data-toggle="popover" data-trigger="focus" data-placement="top"
+                                           title="不能为空，请在右侧输入添加"
+                                           style="width: 277px;height: 25px;margin-left: -20px;" id="input1"
+                                           name="configs[3].content" readonly>
+                                </label>
+                                <label>
+                                    <input type="button" id="del1" value="删除" class="btn btn-sm btn-danger"
+                                           style="margin-left: -20px;margin-top: -3px;"/>
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>输入不能包含的字符</label>
+                                <label>
+                                    <input type="text" class="form-control" data-toggle="popover" data-trigger="focus"
+                                           data-placement="top" title="含有非法字符"
+                                           style="width: 216px;height: 25px;margin-left: -15px;" id="val1">
+                                </label>
+                                <label>
+                                    <input type="button" id="add1" value="添加" class="btn btn-sm btn-success"
+                                           style="margin-left: -20px;margin-top: -3px;"/>
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="1" name="configs[4].checkStatus" {{#if
+                                            this.日期格式检查.checkStatus}}checked="checked" {{/if}}> 日期格式检查
+                                </label>
+                                &nbsp;&nbsp;&nbsp;&nbsp;选择日期标准格式
+                                <label>
+                                    <select class="form-control" style="width: 185px;margin-left: -20px;"
+                                            id="dataSelect" name="configs[4].content">
+                                        <option value="yyyyMM" {{#ifSelect this.日期格式检查.content
+                                                                           'yyyyMM'}}selected="selected" {{/ifSelect}}>
+                                            年月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(199101)
+                                        </option>
+                                        <option value="yyyyMMdd" {{#ifSelect this.日期格式检查.content
+                                                                             'yyyyMMdd'}}selected="selected" {{/ifSelect}}>
+                                            年月日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(19910101)
+                                        </option>
+                                        <option value="yyyy-MM-dd" {{#ifSelect this.日期格式检查.content
+                                                                               'yyyy-MM-dd'}}selected="selected" {{/ifSelect}}>
+                                            年-月-日&nbsp;&nbsp;(1991-01-01)
+                                        </option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="check2" value="1"
+                                           name="configs[5].checkStatus" {{#if
+                                            this.特殊字符检查.checkStatus}}checked="checked" {{/if}}> 特殊字符检查
+                                </label>
+                                <label>
+                                    <input type="text" class="form-control" data-toggle="popover" data-trigger="focus"
+                                           data-placement="top" title="不能为空，请在右侧输入添加"
+                                           style="width: 262px;height: 25px;margin-left: -20px;" id="input2"
+                                           value="{{this.特殊字符检查.content}}" name="configs[5].content" readonly>
+                                </label>
+                                <label>
+                                    <input type="button" id="del2" value="删除" class="btn btn-sm btn-danger"
+                                           style="margin-left: -20px;margin-top: -3px;"/>
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    输入不能包含的特殊字符
+                                </label>
+                                <label>
+                                    <input type="text" class="form-control" data-toggle="popover" data-trigger="focus"
+                                           data-placement="top" title="含有非法字符"
+                                           style="width: 187px;height: 25px;margin-left: -15px;" id="val2">
+                                </label>
+                                <label>
+                                    <input type="button" id="add2" value="添加" class="btn btn-sm btn-success"
+                                           style="margin-left: -20px;margin-top: -3px;"/>
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="1" name="configs[6].checkStatus" {{#if
+                                            this.案卷目录密级为对应卷内目录最高密级.checkStatus}}checked="checked" {{/if}}>
+                                    案卷目录密级为对应卷内目录最高密级
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="1" name="configs[16].checkStatus"  {{#if
+                                           this.检查全宗号、全宗名称是否一致.checkStatus}}checked="checked" {{/if}}>
+                                    检查全宗号、全宗名称是否一致
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="1" name="configs[17].checkStatus" {{#if
+                                           this.检查案卷目录中全宗号、全宗名称与卷内目录的全宗号、全宗名称是否一致.checkStatus}}checked="checked" {{/if}}>
+                                    检查案卷目录中全宗号、全宗名称与卷内目录的全宗号、全宗名称是否一致
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="1" name="configs[18].checkStatus" {{#if
+                                           this.检查分类号、分类名称是否一致.checkStatus}}checked="checked" {{/if}}>
+                                    检查分类号、分类名称是否一致
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="1" name="configs[19].checkStatus" {{#if
+                                           this.检查案卷目录中分类号、分类名称与卷内目录的分类号、分类名称是否一致.checkStatus}}checked="checked" {{/if}}>
+                                    检查案卷目录中分类号、分类名称与卷内目录的分类号、分类名称是否一致
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+                <!-- /.box -->
+                <div class="box box-danger">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">完整性检查</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="checkbox" style="display: inline">
+                            <label>
+                                <input type="checkbox" value="1" name="configs[0].checkStatus" {{#if
+                                       this.字段检测.checkStatus}}checked="checked" {{/if}}> 字段检测
+                            </label>
+                        </div>
+                        <div class="checkbox" style="display: inline">
+                            <label>
+                                <input type="checkbox" value="1" name="configs[7].checkStatus" {{#if
+                                       this.卷内顺序号检查.checkStatus}}checked="checked" {{/if}}> 卷内顺序号检查
+                            </label>
+                        </div>
+                        <div class="checkbox" style="display: inline">
+                            <label>
+                                <input type="checkbox" value="1" name="configs[20].checkStatus" {{#if
+                                       this.题名长度.checkStatus}}checked="checked" {{/if}}> 题名长度
+                            </label>
+                            <label>
+                                <input type="text" class="form-control" data-toggle="popover" data-trigger="focus"
+                                       data-placement="top" title="请设置合法长度" value="{{this.题名长度.content}}"
+                                       style="width: 58px;height: 25px;margin-left: -15px;" id="titleSize" name="configs[20].content">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="button" class="btn btn-info" value="保存" style="width: 150px" id="submit"/>
+            </div>
+            <!--/.col (left) -->
+            <!-- right column -->
+            <div class="col-md-6">
+                <!-- Form Element sizes -->
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">可用性检查</h3>
+                    </div>
+                    <div class="box-body">
+                        <label style="font-size: 16px">可选检查项</label><br>
+                        <div class="checkbox" style="display: inline">
+                            <label>
+                                <input type="checkbox" value="1" name="configs[8].checkStatus" {{#if
+                                        this.数量一致性检查.checkStatus}}checked="checked" {{/if}}> 数量一致性检查
+                            </label>
+                        </div>
+                        <div class="checkbox" style="display: inline">
+                            <label>
+                                <input type="checkbox" value="1" name="configs[9].checkStatus" {{#if
+                                        this.存储结构检查.checkStatus}}checked="checked" {{/if}}> 存储结构检查
+                            </label>
+                        </div>
+                        <div class="checkbox" style="display: inline">
+                            <label>
+                                <input type="checkbox" value="1" name="configs[10].checkStatus" {{#if
+                                        this.电子文件命名规则检查.checkStatus}}checked="checked" {{/if}}> 电子文件命名规则检查
+                            </label>
+                        </div>
+                        <div class="checkbox" style="display: inline">
+                            <label>
+                                <input type="checkbox" value="1" name="configs[11].checkStatus" {{#if
+                                        this.电子文件属性统计.checkStatus}}checked="checked" {{/if}}> 电子文件属性统计
+                            </label>
+                        </div>
+                        <br>
+                        <label style="font-size: 16px;margin-top: 5px;">电子文件规范检查设置</label><br>
+                        <label>图像正确格式</label><br>
+                        <label>
+                            <input type="text" class="form-control" name="configs[12].content"
+                                   value="{{this.图像正确格式.content}}" data-toggle="popover" data-trigger="focus"
+                                   data-placement="top" title="不能为空，请在右侧输入添加"
+                                   style="width: 225px;height: 25px" id="input3" readonly>
+                        </label>
+                        <label>
+                            <input type="button" id="del3" value="删除" class="btn btn-sm btn-danger"
+                                   style="margin-top: -3px;"/>
+                        </label>
+                        <br>
+                        <label>
+                            <input type="text" class="form-control" data-toggle="popover" data-trigger="focus"
+                                   data-placement="top" title="含有非法字符"
+                                   style="width: 225px;height: 25px;" id="val3">
+                        </label>
+                        <label>
+                            <input type="button" id="add3" value="添加" class="btn btn-sm btn-success"
+                                   style="margin-top: -3px;"/>
+                        </label>
+                        <br>
+                        <label>文档正确格式</label><br>
+                        <label>
+                            <input type="text" class="form-control" name="configs[13].content"
+                                   value="{{this.文档正确格式.content}}" data-toggle="popover" data-trigger="focus"
+                                   data-placement="top" title="不能为空，请在右侧输入添加"
+                                   style="width: 225px;height: 25px" id="input4" readonly>
+                        </label>
+                        <label>
+                            <input type="button" id="del4" value="删除" class="btn btn-sm btn-danger"
+                                   style="margin-top: -3px;"/>
+                        </label>
+                        <br>
+                        <label>
+                            <input type="text" class="form-control" data-toggle="popover" data-trigger="focus"
+                                   data-placement="top" title="含有非法字符"
+                                   style="width: 225px;height: 25px;" id="val4">
+                        </label>
+                        <label>
+                            <input type="button" id="add4" value="添加" class="btn btn-sm btn-success"
+                                   style="margin-top: -3px;"/>
+                        </label>
+                        <br>
+                        <label>音频正确格式</label><br>
+                        <label>
+                            <input type="text" class="form-control" name="configs[14].content"
+                                   value="{{this.音频正确格式.content}}" data-toggle="popover" data-trigger="focus"
+                                   data-placement="top" title="不能为空，请在右侧输入添加"
+                                   style="width: 225px;height: 25px" id="input5" readonly>
+                        </label>
+                        <label>
+                            <input type="button" id="del5" value="删除" class="btn btn-sm btn-danger"
+                                   style="margin-top: -3px;"/>
+                        </label>
+                        <br>
+                        <label>
+                            <input type="text" class="form-control" data-toggle="popover" data-trigger="focus"
+                                   data-placement="top" title="含有非法字符"
+                                   style="width: 225px;height: 25px;" id="val5">
+                        </label>
+                        <label>
+                            <input type="button" id="add5" value="添加" class="btn btn-sm btn-success"
+                                   style="margin-top: -3px;"/>
+                        </label>
+                        <br>
+                        <label>视频正确格式</label><br>
+                        <label>
+                            <input type="text" class="form-control" name="configs[15].content"
+                                   value="{{this.视频正确格式.content}}" data-toggle="popover" data-trigger="focus"
+                                   data-placement="top" title="不能为空，请在右侧输入添加"
+                                   style="width: 225px;height: 25px" id="input6" readonly>
+                        </label>
+                        <label>
+                            <input type="button" id="del6" value="删除" class="btn btn-sm btn-danger"
+                                   style="margin-top: -3px;"/>
+                        </label>
+                        <br>
+                        <label>
+                            <input type="text" class="form-control" data-toggle="popover" data-trigger="focus"
+                                   data-placement="top" title="含有非法字符"
+                                   style="width: 225px;height: 25px;" id="val6">
+                        </label>
+                        <label>
+                            <input type="button" id="add6" value="添加" class="btn btn-sm btn-success"
+                                   style="margin-top: -3px;"/>
+                        </label>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <div class="box box-info">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">安全性检查</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="" name="kill" data-toggle="popover" data-trigger="focus"
+                                       data-placement="top" title="请先进行病毒查杀">
+                                <span style="color: red">我已安装杀毒软件并已进行病毒查杀</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/.col (right) -->
+        </div>
+    </form>
+    <!-- /.row -->
+</section>
+
+<script>
+    $("#submit").click(function () {
+        //是否病毒查杀
+        if(!$("input[name='kill']").prop("checked")){
+            $("input[name='kill']").popover('show');
+            return false;
+        }else{
+            $("input[name='kill']").popover('hide');
+        }
+        //校验
+        for (var i = 1; i < 3; i++) {
+            if ($("#check" + i).prop("checked")) {
+                if ($('#input' + i).val() == "") {
+                    $('#input' + i).popover('show');
+                    return false;
+                }else{
+                    $('#input' + i).popover('hide');
+                }
+            }
+        }
+        for (var i = 3; i < 7; i++) {
+            if ($('#input' + i).val() == "") {
+                $('#input' + i).popover('show');
+                return false;
+            }else{
+                $('#input' + i).popover('hide');
+            }
+        }
+        var titleSize = $("#titleSize").val();
+        if(titleSize==""){
+            $("#titleSize").popover('show');
+            return false;
+        }else if(!/^[1-9]\d*$/.test(titleSize)){
+            $("#titleSize").popover('show');
+            return false;
+        }else{
+            $("#titleSize").popover('hide');
+        }
+        $.ajax({
+            url: 'config/saveConfig',
+            type: 'post',
+            data: $('#configForm').serialize(),
+            success: function (data) {
+                if (data == "ok") {
+                    layer.alert('保存成功', {icon: 1});
+                }
+            },
+            dataType: "text"
+        })
+    });
+
+    $("input[id*=add]").click(function () {
+        var id = $(this).get(0).id;
+        var num = id[id.length - 1];
+        var str = $("#val" + num).val();
+        if (str != null && str != "") {
+            //校验是否含有半角逗号
+            if (str.indexOf(",") != -1) {
+                $("#val" + num).popover('show');
+                return false;
+            } else {
+                var fullStr = $("#input" + num).val();
+                if (fullStr == "") {
+                    $("#input" + num).val(str);
+                } else {
+                    var arr = fullStr.split(",");
+                    var b = true;
+                    for (var i = 0; i < arr.length; i++) {
+                        if (arr[i] == str) {
+                            b = false;
+                            break;
+                        }
+                    }
+                    if (b) {
+                        $("#input" + num).val(fullStr + "," + str);
+                    }
+                }
+            }
+            $("#val" + num).val("");
+        }
+    });
+    $("input[id*=del]").click(function () {
+        var id = $(this).get(0).id;
+        var num = id[id.length - 1];
+        var fullStr = $("#input" + num).val();
+        if (fullStr != "") {
+            var index = fullStr.lastIndexOf(",");
+            $("#input" + num).val(fullStr.substr(0, index));
+        }
+    });
+</script>

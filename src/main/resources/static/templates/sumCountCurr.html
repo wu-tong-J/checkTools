@@ -1,0 +1,201 @@
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <div class="form-group" style="display: inline">
+                        <h3 class="box-title">档案门类</h3>
+                        <input type="text" id="libcodeCountSum" value="" readonly>
+                        <input type="hidden" name="libcodeCountSum" value="">
+                        <div class="ztree" id="arcTreeCountSum"
+                             style="background-color: #ffffff;display: none;position: absolute;width: 166px;z-index: 200;margin-left: 408px;">
+                            <ul id="treeUl" style="overflow:auto;"></ul>
+                        </div>
+                    </div>
+                    <input type="button" id="reget" value="查看" class="btn btn-sm btn-primary"
+                           style="margin-top: -3px;"/>
+                    <input type="button" onclick="exportExcel()" value="导出Excel" class="btn btn-sm btn-success"
+                           style="margin-top: -3px;"/>
+                    <br><br>
+                    <h3 class="box-title">显示字段</h3>
+                    <div>
+                        <input type="checkbox" id="ch0" value="libname" onclick="dis(0)" checked
+                               style="margin-left: 5px">档案门类
+                        <input type="checkbox" id="ch1" value="ly" onclick="dis(1)" checked style="margin-left: 5px">来源目录
+                        <input type="checkbox" id="ch2" value="volnum" onclick="dis(2)" checked
+                               style="margin-left: 5px">总卷数
+                        <input type="checkbox" id="ch3" value="zjs" onclick="dis(3)" checked style="margin-left: 5px">总件数
+                        <input type="checkbox" id="ch4" value="zys" onclick="dis(4)" checked style="margin-left: 5px">总页数
+                        <input type="checkbox" id="ch5" value="zhfs" onclick="dis(5)" checked style="margin-left: 5px">总画幅数
+                        <input type="checkbox" id="ch6" value="mjnum" onclick="dis(6)" checked style="margin-left: 5px">各密级项卷数
+                        <input type="checkbox" id="ch7" value="mjjs" onclick="dis(7)" checked style="margin-left: 5px">各密级项件数
+                        <input type="checkbox" id="ch8" value="mjys" onclick="dis(8)" checked style="margin-left: 5px">各密级项页数
+                        <input type="checkbox" id="ch9" value="mjhfs" onclick="dis(9)" checked style="margin-left: 5px">各密级项画幅数
+                        <input type="checkbox" id="ch10" value="fileEnum" onclick="dis(10)" checked
+                               style="margin-left: 5px">文件数量
+                        <input type="checkbox" id="ch12" value="ext" onclick="dis(11)" checked style="margin-left: 5px">文件格式
+                        <input type="checkbox" id="ch12" value="A3up" onclick="dis(12)" checked
+                               style="margin-left: 5px">A3以上
+                        <input type="checkbox" id="ch12" value="A3A4" onclick="dis(13)" checked
+                               style="margin-left: 5px">A3至A4
+                        <input type="checkbox" id="ch12" value="A4down" onclick="dis(14)" checked
+                               style="margin-left: 5px">A4以下
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example" class="table table-bordered table-striped dataTable nowrap">
+                        <thead>
+                        <tr>
+                            <th>档案门类</th>
+                            <th>来源目录</th>
+                            <th>总卷数</th>
+                            <th>总件数</th>
+                            <th>总页数</th>
+                            <th>总画幅数</th>
+                            <th>各密级项卷数</th>
+                            <th>各密级项件数</th>
+                            <th>各密级项页数</th>
+                            <th>各密级项画幅数</th>
+                            <th>电子文件数量</th>
+                            <th>电子文件格式</th>
+                            <th>A3以上</th>
+                            <th>A3至A4</th>
+                            <th>A4以下</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
+<script>
+    var settingCountSum = {
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        //回调
+        callback: {
+            onClick: zTreeOnClickCountSum
+        },
+        view: {
+            fontCss: {fontSize: "14px"}
+        }
+    };
+
+    function zTreeOnClickCountSum(event, treeId, treeNode) {
+        $("input[name='libcodeCountSum']").val(treeNode.id);
+        $("#libcodeCountSum").val(treeNode.name);
+        hideTree();
+    };
+    /*function hideTree() {
+        $('.ztree').css('display', 'none');
+        $("body").unbind("mousedown", onBodyDownByActionType);
+        return false;
+    }*/
+    $("#libcodeCountSum").click(function () {
+        showArcTree();
+    });
+
+    function showArcTree() {
+        if ($('#arcTreeCountSum').css('display') == 'none') {
+            $('#arcTreeCountSum').css('display', 'block');
+        } else {
+            $('#arcTreeCountSum').css('display', 'none');
+        }
+        $("body").bind("mousedown", onBodyDownByActionTypeCountSum);
+    }
+
+    //区域外点击事件
+    function onBodyDownByActionTypeCountSum(event) {
+        if (event.target.id.indexOf('tree') == -1 && event.target.id.indexOf('Tree') == -1) {
+            if (event.target.id != 'selectDevType') {
+                hideTree();
+            }
+        }
+    }
+
+    $(document).ready(function () {
+        $.ajax({
+            url: '/tree/getArcTree',
+            type: 'post',
+            success: function (data) {
+                zTreeObj = $.fn.zTree.init($("#treeUl"), settingCountSum, data);
+            },
+            dataType: "json"
+        })
+
+        var table = $('#example').DataTable({
+            "ajax": {
+                "url": "/zky/statistics/getStatisticsData",
+                "data": function (d) {
+                    d.whereStr = $("#dateRange").val();
+                    d.libcode = $("#libcodeCountSum").val();
+                    d.ifHistory = 0;
+                },
+                /*"dataSrc": function (json) {
+                    json.data.forEach(function(row){
+                        row.libname = row.libname || "全部";
+                    });
+                    return json.data;
+                },*/
+                "type": "post"
+            },
+            "serverSide": true,
+            "columns": [
+                {"data": "libname"},
+                {"data": "ly"},
+                {"data": "volnum"},
+                {"data": "zjs"},
+                {"data": "zys"},
+                {"data": "zhfs"},
+                {"data": "mjnum"},
+                {"data": "mjjs"},
+                {"data": "mjys"},
+                {"data": "mjhfs"},
+                {"data": "fileEnum"},
+                {"data": "ext"},
+                {"data": "A3up"},
+                {"data": "A3A4"},
+                {"data": "A4down"}
+            ],
+            "language": {
+                url: '/bower_components/datatables.net/chinese.json'
+            },
+            'paging': false,
+            'lengthChange': true,
+            "processing": true,
+            'searching': false,
+            'ordering': false,
+            'autoWidth': false,
+            "scrollX": true,
+            "colReorder": true
+        });
+        $("#reget").click(function () {
+            table.draw();
+        });
+    });
+
+    function dis(num) {
+        var b = $("#ch" + num).prop("checked");
+        $('#example').DataTable().column(num).visible(b);
+    }
+
+    function exportExcel() {
+        var whereStr = $("#dateRange").val();
+        var arr = $("input[id*='ch']:checked");
+        var displayFie = "";
+        for (var i = 0; i < arr.length; i++) {
+            displayFie = displayFie + arr[i].value + "@";
+        }
+        window.location.href = "/zky/exportExcel/log?manu=stat&whereStr=" + whereStr + "&displayFie=" + displayFie;
+    }
+</script>

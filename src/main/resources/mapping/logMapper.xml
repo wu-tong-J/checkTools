@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.unis.zkydatadetection.mapper.logMapper" >
+  <resultMap id="BaseResultMap" type="com.unis.zkydatadetection.model.log" >
+    <id column="syscode" property="syscode" jdbcType="VARCHAR" />
+    <result column="libcode" property="libcode" jdbcType="VARCHAR" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    syscode, libcode, unit, createtime, content, username, status, remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from s_log
+    where syscode = #{syscode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from s_log
+    where syscode = #{syscode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.unis.zkydatadetection.model.log" >
+    insert into s_log (syscode, libcode, unit, 
+      createtime, content, username, status,
+      remark)
+    values (#{syscode,jdbcType=VARCHAR}, #{libcode,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, {content,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.unis.zkydatadetection.model.log" >
+    insert into s_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="syscode != null" >
+        syscode,
+      </if>
+      <if test="libcode != null" >
+        libcode,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="syscode != null" >
+        #{syscode,jdbcType=VARCHAR},
+      </if>
+      <if test="libcode != null" >
+        #{libcode,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.unis.zkydatadetection.model.log" >
+    update s_log
+    <set >
+      <if test="libcode != null" >
+        libcode = #{libcode,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        content = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where syscode = #{syscode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.unis.zkydatadetection.model.log" >
+    update s_log
+    set libcode = #{libcode,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where syscode = #{syscode,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,211 @@
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <input type="button" id="add1" value="导出Excel" class="btn btn-sm btn-success"
+                           style="margin-top: -3px;"/>
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion"
+                                       href="#collapseOne">
+                                        条件检索
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <h3 class="box-title">日期范围</h3>
+                                    <input type="text" id="dateRange" class="form-control" style="width: 249px;display: inline;">
+                                    <h3 class="box-title" style="margin-left: 12px;">关键字</h3>
+                                    <input type="text" class="form-control" id="voltitle" placeholder="案卷题名" style="width: 300px;display: inline;"/>
+                                    <input type="text" class="form-control" id="filetitle" placeholder="文件题名" style="width: 300px;display: inline;"/>
+                                    <input type="text" class="form-control" id="sipfilepath" placeholder="sip文件路径" style="width: 300px;display: inline;"/>
+                                    <input type="text" class="form-control" id="sipfilename" placeholder="sip文件名称" style="width: 300px;display: inline;"/>
+                                    <input type="hidden" id="sql">
+                                    <input type="text" class="form-control" id="err" placeholder="错误信息" style="width: 300px;display: inline;"/>
+                                    <input type="button" id="reget" value="查看" class="btn btn btn-primary"
+                                           style="margin-top: -3px;"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion"
+                                       href="#collapseTwo">
+                                        显示字段
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div>
+                                        <input type="checkbox" id="ch0" value="volzdfh" onclick="dis(0)" checked
+                                               style="margin-left: 5px">sip案卷字段特殊符号检测
+                                        <input type="checkbox" id="ch1" value="filezdfh" onclick="dis(1)" checked
+                                               style="margin-left: 5px">sip文件字段特殊符号检测
+                                        <input type="checkbox" id="ch2" value="voltitle" onclick="dis(2)" checked
+                                               style="margin-left: 5px">所属案件题名
+                                        <input type="checkbox" id="ch3" value="filetitle" onclick="dis(3)" checked
+                                               style="margin-left: 5px">所属文件题名
+                                        <input type="checkbox" id="ch4" value="sipfilepath" onclick="dis(4)" checked
+                                               style="margin-left: 5px">sip包所在路径
+                                        <input type="checkbox" id="ch5" value="sipfilename" onclick="dis(5)" checked
+                                               style="margin-left: 5px">sip包名称
+                                        <input type="checkbox" id="ch6" value="digital" onclick="dis(6)" checked
+                                               style="margin-left: 5px">数字摘要
+                                        <input type="checkbox" id="ch7" value="dzwj" onclick="dis(7)" checked
+                                               style="margin-left: 5px">电子文件状态
+                                        <input type="checkbox" id="ch8" value="parserSip" onclick="dis(8)" checked
+                                               style="margin-left: 5px">sip包是否可解析
+                                        <input type="checkbox" id="ch9" value="efileStatus" onclick="dis(9)" checked
+                                               style="margin-left: 5px">sip包内是否有电子文件
+                                        <input type="checkbox" id="ch10" value="createtime" onclick="dis(10)" checked
+                                               style="margin-left: 5px">操作时间
+                                        <input type="checkbox" id="ch11" value="libname" onclick="dis(11)" checked
+                                               style="margin-left: 5px">档案类型
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="example" class="table table-bordered table-striped dataTable nowrap">
+                        <thead>
+                        <tr>
+                            <th>sip案卷字段特殊符号检测</th>
+                            <th>sip文件字段特殊符号检测</th>
+                            <th>所属案件题名</th>
+                            <th>所属文件题名</th>
+                            <th>sip包所在路径</th>
+                            <th>sip包名称</th>
+                            <th>数字摘要</th>
+                            <th>电子文件状态</th>
+                            <th>sip包是否可解析</th>
+                            <th>sip包内是否有电子文件</th>
+                            <th>操作时间</th>
+                            <th>档案类型</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
+<script>
+    $(document).ready(function() {
+        laydate.render({
+            elem: '#dateRange'
+            ,type: 'datetime'
+            ,range: '~'
+        });
+
+        var table = $('#example').DataTable( {
+            "ajax": {
+                "url": "/zky/check/getSipData",
+                "data": function ( d ) {
+                    d.arcLvl = "sip";
+                    d.whereStr = $("#dateRange").val();
+                    d.ifHistory = "0";
+                    d.whereSql = $("#sql").val();
+                    d.whereErr = $("#err").val();
+                },
+                "type":"post"
+            },
+            "serverSide": true,
+            columnDefs: [
+                { targets: [4,9], width:"200px",render: $.fn.dataTable.render.ellipsis( 30, true )}
+            ],
+            "columns": [
+                { "data": "volzdfh" },
+                { "data": "filezdfh" },
+                { "data": "voltitle" },
+                { "data": "filetitle" },
+                { "data": "sipfilepath" },
+                { "data": "sipfilename" },
+                { "data": "digital" },
+                { "data": "dzwj" },
+                { "data": "parserSip" },
+                { "data": "efileStatus" },
+                { "data": "createtime" },
+                { "data": "libname" }
+            ],
+            "order": [[ 10, "desc" ]],
+            "language": {
+                url:'/bower_components/datatables.net/chinese.json'
+            },
+            'paging'      : true,
+            'lengthChange': true,
+            "processing": true,
+            'searching'   : false,
+            'ordering'    : true,
+            'autoWidth'   : true,
+            "scrollX": true
+        } );
+        $("#reget").click(function () {
+            //处理条件检索
+            setSql();
+            table.draw();
+        });
+    } );
+
+    function dis(num) {
+        var b = $("#ch"+num).prop("checked");
+        $('#example').DataTable().column(num).visible(b);
+    }
+    function setSql() {
+        var voltitle = $("#voltitle").val();
+        var filetitle = $("#filetitle").val();
+        var sipfilepath = $("#sipfilepath").val();
+        var sipfilename = $("#sipfilename").val();
+        var sql = "";
+        if (voltitle != "") {
+            if (sql != "") {
+                sql = sql + " or ";
+            }
+            sql = sql + "voltitle like '%" + voltitle + "%'";
+        }
+        if (filetitle != "") {
+            if (sql != "") {
+                sql = sql + " or ";
+            }
+            sql = sql + "filetitle like '%" + filetitle + "%'";
+        }
+        if (sipfilepath != "") {
+            if (sql != "") {
+                sql = sql + " or ";
+            }
+            sql = sql + "sipfilepath like '%" + sipfilepath + "%'";
+        }
+        if (sipfilename != "") {
+            if (sql != "") {
+                sql = sql + " or ";
+            }
+            sql = sql + "sipfilename like '%" + sipfilename + "%'";
+        }
+        $("#sql").val(sql);
+    }
+    function exportExcel() {
+        setSql();
+        var whereStr = $("#dateRange").val();
+        var sql = $("#sql").val();
+        var err = $("#err").val();
+        var arr = $("input[id*='ch']:checked");
+        var displayFie = "";
+        for (var i=0;i<arr.length;i++){
+            displayFie = displayFie+arr[i].value+"@";
+        }
+        window.location.href = "/zky/exportExcel/log?manu=sip&arcLvl=sip&ifHistory=0&whereStr="+whereStr+"&whereSql="+sql+"&whereErr="+err+"&displayFie="+displayFie;
+    }
+</script>

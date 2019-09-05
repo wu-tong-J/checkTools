@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 2 | Starter</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" th:href="@{bower_components/bootstrap/dist/css/bootstrap.min.css}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{bower_components/font-awesome/css/font-awesome.min.css}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" th:href="@{bower_components/Ionicons/css/ionicons.min.css}">
+    <!-- DataTables -->
+    <link rel="stylesheet" th:href="@{../../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css}">
+    <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{dist/css/AdminLTE.min.css}">
+    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+          page. However, you can choose any other skin. Make sure you
+          apply the skin class to the body tag so the changes take effect. -->
+    <link rel="stylesheet" th:href="@{dist/css/skins/skin-blue.min.css}">
+    <link rel="stylesheet" th:href="@{css/buttons.dataTables.min.css}">
+    <!--<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">-->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Google Font -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+</head>
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to get the
+desired effect
+|---------------------------------------------------------|
+| SKINS         | skin-blue                               |
+|               | skin-black                              |
+|               | skin-purple                             |
+|               | skin-yellow                             |
+|               | skin-red                                |
+|               | skin-green                              |
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | fixed                                   |
+|               | layout-boxed                            |
+|               | layout-top-nav                          |
+|               | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+<body class="hold-transition skin-blue sidebar-mini fixed">
+<!-- 导入档案系统元数据模态框（Modal） -->
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="importModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="importModalLabel">
+                    请选择导入数据所在路径
+                </h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" name="xmlPath" value="" placeholder="点击进行选择" readonly class="form-control">
+                <div class="ztree" id="xmlTreeDiv"
+                     style="background-color: rgb(255, 242, 242);display: none;position: absolute;width: 320px;z-index: 200">
+                    <ul id="xmlTree" style="overflow:auto;"></ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                </button>
+                <button type="button" class="btn btn-primary" onclick="importData()">
+                    导入
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<div class="wrapper">
+
+    <!-- Main Header -->
+    <header class="main-header">
+
+        <!-- Logo -->
+        <a href="javascript:void(0)" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini">
+                <img src="images/logo.png" style="width: 30px;height: 30px">
+            </span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg">检测工具</span>
+        </a>
+
+        <!-- Header Navbar -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <!-- Navbar Right Menu -->
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <!-- Messages: style can be found in dropdown.less-->
+                    <!--<li class="dropdown messages-menu">
+                        &lt;!&ndash; Menu toggle button &ndash;&gt;
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-envelope-o"></i>
+                            <span class="label label-success">4</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">You have 4 messages</li>
+                            <li>
+                                &lt;!&ndash; inner menu: contains the messages &ndash;&gt;
+                                <ul class="menu">
+                                    <li>&lt;!&ndash; start message &ndash;&gt;
+                                        <a href="#">
+                                            <div class="pull-left">
+                                                &lt;!&ndash; User Image &ndash;&gt;
+                                                <img src="dist/img/user2-160x160.jpg" class="img-circle"
+                                                     alt="User Image">
+                                            </div>
+                                            &lt;!&ndash; Message title and timestamp &ndash;&gt;
+                                            <h4>
+                                                Support Team
+                                                <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                            </h4>
+                                            &lt;!&ndash; The message &ndash;&gt;
+                                            <p>Why not buy a new awesome theme?</p>
+                                        </a>
+                                    </li>
+                                    &lt;!&ndash; end message &ndash;&gt;
+                                </ul>
+                                &lt;!&ndash; /.menu &ndash;&gt;
+                            </li>
+                            <li class="footer"><a href="#">See All Messages</a></li>
+                        </ul>
+                    </li>
+                    &lt;!&ndash; /.messages-menu &ndash;&gt;
+
+                    &lt;!&ndash; Notifications Menu &ndash;&gt;
+                    <li class="dropdown notifications-menu">
+                        &lt;!&ndash; Menu toggle button &ndash;&gt;
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-bell-o"></i>
+                            <span class="label label-warning">10</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">You have 10 notifications</li>
+                            <li>
+                                &lt;!&ndash; Inner Menu: contains the notifications &ndash;&gt;
+                                <ul class="menu">
+                                    <li>&lt;!&ndash; start notification &ndash;&gt;
+                                        <a href="#">
+                                            <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                        </a>
+                                    </li>
+                                    &lt;!&ndash; end notification &ndash;&gt;
+                                </ul>
+                            </li>
+                            <li class="footer"><a href="#">View all</a></li>
+                        </ul>
+                    </li>
+                    &lt;!&ndash; Tasks Menu &ndash;&gt;
+                    <li class="dropdown tasks-menu">
+                        &lt;!&ndash; Menu Toggle Button &ndash;&gt;
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-flag-o"></i>
+                            <span class="label label-danger">9</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">You have 9 tasks</li>
+                            <li>
+                                &lt;!&ndash; Inner menu: contains the tasks &ndash;&gt;
+                                <ul class="menu">
+                                    <li>&lt;!&ndash; Task item &ndash;&gt;
+                                        <a href="#">
+                                            &lt;!&ndash; Task title and progress text &ndash;&gt;
+                                            <h3>
+                                                Design some buttons
+                                                <small class="pull-right">20%</small>
+                                            </h3>
+                                            &lt;!&ndash; The progress bar &ndash;&gt;
+                                            <div class="progress xs">
+                                                &lt;!&ndash; Change the css width attribute to simulate progress &ndash;&gt;
+                                                <div class="progress-bar progress-bar-aqua" style="width: 20%"
+                                                     role="progressbar"
+                                                     aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                    <span class="sr-only">20% Complete</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    &lt;!&ndash; end task item &ndash;&gt;
+                                </ul>
+                            </li>
+                            <li class="footer">
+                                <a href="#">View all tasks</a>
+                            </li>
+                        </ul>
+                    </li>
+                    &lt;!&ndash; User Account Menu &ndash;&gt;
+                    <li class="dropdown user user-menu">
+                        &lt;!&ndash; Menu Toggle Button &ndash;&gt;
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            &lt;!&ndash; The user image in the navbar&ndash;&gt;
+                            <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                            &lt;!&ndash; hidden-xs hides the username on small devices so only the image appears. &ndash;&gt;
+                            <span class="hidden-xs" th:text="${username}"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            &lt;!&ndash; The user image in the menu &ndash;&gt;
+                            <li class="user-header">
+                                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+
+                                <p>
+                                    Alexander Pierce - Web Developer
+                                    <small>Member since Nov. 2012</small>
+                                </p>
+                            </li>
+                            &lt;!&ndash; Menu Body &ndash;&gt;
+                            <li class="user-body">
+                                <div class="row">
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Followers</a>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Sales</a>
+                                    </div>
+                                    <div class="col-xs-4 text-center">
+                                        <a href="#">Friends</a>
+                                    </div>
+                                </div>
+                                &lt;!&ndash; /.row &ndash;&gt;
+                            </li>
+                            &lt;!&ndash; Menu Footer&ndash;&gt;
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>-->
+                    <!-- Control Sidebar Toggle Button -->
+                    <li>
+                        <a href="#" data-toggle="modal" data-target="#importModal">导入档案系统元数据</a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="control-sidebar">检查项配置</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+
+            <!-- Sidebar user panel (optional) -->
+            <!--<div class="user-panel">-->
+            <!--<div class="pull-left image">-->
+            <!--<img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">-->
+            <!--</div>-->
+            <!--<div class="pull-left info">-->
+            <!--<p>Alexander Pierce</p>-->
+            <!--&lt;!&ndash; Status &ndash;&gt;-->
+            <!--<a href="#"><i class="fa fa-circle text-success"></i> Online</a>-->
+            <!--</div>-->
+            <!--</div>-->
+
+            <!-- search form (Optional) -->
+            <!--<form action="#" method="get" class="sidebar-form">-->
+            <!--<div class="input-group">-->
+            <!--<input type="text" name="q" class="form-control" placeholder="Search...">-->
+            <!--<span class="input-group-btn">-->
+            <!--<button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>-->
+            <!--</button>-->
+            <!--</span>-->
+            <!--</div>-->
+            <!--</form>-->
+            <!-- /.search form -->
+
+            <!-- Sidebar Menu -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="header"></li>
+                <!-- Optionally, you can add icons to the links -->
+                <li th:each="menu,status : ${menu}"
+                    th:class="${menu.children != null? 'treeview': ''}">
+                    <a th:href="${menu.url}">
+                        <i th:class="${menu.iconClass}"></i>
+                        <span th:text="${menu.text}"></span>
+                        <span th:if="${menu.children != null}" class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                    </a>
+                    <ul th:if="${menu.children != null}" class="treeview-menu">
+                        <li th:each="submenu,st : ${menu.children}">
+                            <a th:href="${submenu.url}">
+                                <i th:class="${submenu.iconClass}"></i>
+                                <span th:text="${submenu.text}"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- /.sidebar-menu -->
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        welcome
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <!--<footer class="main-footer">
+        &lt;!&ndash; To the right &ndash;&gt;
+        <div class="pull-right hidden-xs">
+            Anything you want
+        </div>
+        &lt;!&ndash; Default to the left &ndash;&gt;
+        <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+    </footer>-->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Create the tabs -->
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+            <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab">检查项配置</a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content" id="aa">
+            <form id="checkForm">
+                <!-- Home tab content -->
+                <div class="tab-pane active" id="control-sidebar-home-tab">
+                    <div class="form-group">
+                        <label>档案类型</label><br>
+                        <div class="form-group">
+                            <select name="archiveType" style="width: 100%;height: 34px;color: black">
+                                <option value="1">先导专项</option>
+                                <option value="2">二期进馆</option>
+                                <option value="3">其他</option>
+                            </select>
+                        </div>
+                        <!--<div class="radio-inline">
+                            <input type="radio" name="archiveType" value="1" class="radio" checked>二期进馆
+                        </div>
+                        <div class="radio-inline">
+                            <input type="radio" name="archiveType" value="2" class="radio">先导专项
+                        </div>-->
+                    </div>
+                    <div class="form-group">
+                        <label>档案门类</label>
+                        <input type="text" id="libcode" value="" readonly class="form-control">
+                        <input type="hidden" name="libcode" value="" class="form-control">
+                        <div class="ztree" id="arcTree"
+                             style="background-color: #ffffff;display: none;position: absolute;width: 183px;z-index: 200">
+                            <ul id="tree" style="overflow:auto;"></ul>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>检查人</label>
+                        <input type="text" name="person" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>是否为SIP包</label><br>
+                        <div class="radio-inline">
+                            <input type="radio" name="isSip" value="1" class="radio">是
+                        </div>
+                        <div class="radio-inline">
+                            <input type="radio" name="isSip" value="2" class="radio" checked>否
+                        </div>
+                    </div>
+                    <div class="form-group" id="volDiv">
+                        <label for="exampleInputFile">案卷级数据源</label>
+                        <input type="button" id="volClear" value="清除" class="btn btn-sm btn-danger"
+                               style="padding-top: 0px;height: 20px;width: 46px;margin-top: 0px;margin-left: 20px;"/>
+                        <!--<input type="file" id="dataFile" accept=".xls,.xlsx,.zip">
+                        <input type="hidden" id="dataFilePath" value="">-->
+                        <input type="text" name="volPath" value="" readonly class="form-control">
+                        <div class="ztree" id="volTreeDiv"
+                             style="background-color: #ffffff;display: none;position: absolute;width: 183px;z-index: 200">
+                            <ul id="volTree" style="overflow:auto;"></ul>
+                        </div>
+                    </div>
+                    <div class="form-group" id="fileDiv">
+                        <label for="exampleInputFile">文件级数据源</label>
+                        <input type="button" id="fileClear" value="清除" class="btn btn-sm btn-danger"
+                               style="padding-top: 0px;height: 20px;width: 46px;margin-top: 0px;margin-left: 20px;"/>
+                        <!--<input type="file" id="dataFile" accept=".xls,.xlsx,.zip">
+                        <input type="hidden" id="dataFilePath" value="">-->
+                        <input type="text" name="filePath" value="" readonly class="form-control">
+                        <div class="ztree" id="fileTreeDiv"
+                             style="background-color: #ffffff;display: none;position: absolute;width: 183px;z-index: 200">
+                            <ul id="fileTree" style="overflow:auto;"></ul>
+                        </div>
+                    </div>
+                    <div class="form-group" id="efileDiv">
+                        <label for="exampleInputFile">电子原文路径</label>
+                        <input type="button" id="efileClear" value="清除" class="btn btn-sm btn-danger"
+                               style="padding-top: 0px;height: 20px;width: 46px;margin-top: 0px;margin-left: 20px;"/>
+                        <!--<input type="file" id="dataDir"  webkitdirectory directory >
+                        <input type="hidden" id="dataDirPath" value="">-->
+                        <input type="text" name="efilePath" value="" readonly class="form-control">
+                        <div class="ztree" id="efileTreeDiv"
+                             style="background-color: #ffffff;display: none;position: absolute;width: 183px;z-index: 200">
+                            <ul id="efileTree" style="overflow:auto;"></ul>
+                        </div>
+                    </div>
+                    <div class="form-group" id="sipDiv">
+                        <label for="exampleInputFile">SIP路径</label>
+                        <input type="button" id="sipClear" value="清除" class="btn btn-sm btn-danger"
+                               style="padding-top: 0px;height: 20px;width: 46px;margin-top: 0px;margin-left: 20px;"/>
+                        <!--<input type="file" id="dataDir"  webkitdirectory directory >
+                        <input type="hidden" id="dataDirPath" value="">-->
+                        <input type="text" name="sipPath" value="" readonly class="form-control">
+                        <div class="ztree" id="sipTreeDiv"
+                             style="background-color: #ffffff;display: none;position: absolute;width: 183px;z-index: 200">
+                            <ul id="sipTree" style="overflow:auto;"></ul>
+                        </div>
+                    </div>
+                    <!--<div class="form-group">
+                        <label for="exampleInputFile">图像数据源</label>
+                        <input type="file" id="exampleInputFile">
+                    </div>-->
+                    <div class="form-group">
+                        <label for="exampleInputFile">检查项</label>
+                        <!--<div class="checkbox">-->
+                            <!--<label>-->
+                                <!--<input type="checkbox" value="基础检查" name="c1"> 基础检查-->
+                            <!--</label>-->
+                        <!--</div>-->
+                        <!--<div class="checkbox">-->
+                            <!--<label>-->
+                                <!--<input type="checkbox" value="字段检查" name="c2"> 字段检查-->
+                            <!--</label>-->
+                        <!--</div>-->
+                        <!--<div class="checkbox">-->
+                            <!--<label>-->
+                                <!--<input type="checkbox"  value="全宗名称检查" name="c3"> 全宗名称检查-->
+                            <!--</label>-->
+                        <!--</div>-->
+                        <!--<div class="checkbox">-->
+                            <!--<label>-->
+                                <!--<input type="checkbox" value="分类号一致性检查" name="c4"> 分类号一致性检查-->
+                            <!--</label>-->
+                        <!--</div>-->
+                        <!--<div class="checkbox">-->
+                            <!--<label>-->
+                                <!--<input type="checkbox"  value="数量统计检查" name="c5"> 数量统计检查-->
+                            <!--</label>-->
+                        <!--</div>-->
+                        <!--<div class="checkbox">-->
+                            <!--<label>-->
+                                <!--<input type="checkbox" value="页数页号检查" name="c6"> 页数页号检查-->
+                            <!--</label>-->
+                        <!--</div>-->
+                        <!--<div class="checkbox">-->
+                            <!--<label>-->
+                                <!--<input type="checkbox" value="科研档案案卷目录检查" name="c7"> 科研档案案卷目录检查-->
+                            <!--</label>-->
+                        <!--</div>-->
+                        <!--<div class="checkbox">-->
+                            <!--<label>-->
+                                <!--<input type="checkbox" value="数字化情况检查" name="c8"> 数字化情况检查-->
+                            <!--</label>-->
+                        <!--</div>-->
+                        <!--<div class="checkbox">-->
+                            <!--<label>-->
+                                <!--<input type="checkbox" value="页数画幅数汇总统计" name="c9"> 页数画幅数汇总统计-->
+                            <!--</label>-->
+                        <!--</div>-->
+                        <!--<div class="checkbox">-->
+                            <!--<label>-->
+                                <!--<input type="checkbox" value="图像情况检查" name="c10"> 图像情况检查-->
+                            <!--</label>-->
+                        <!--</div>-->
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="真实性检查" name="c1"> 真实性检查
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"  value="完整性检查" name="c3"> 完整性检查
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"  value="页数页号检查" name="c5"> 页数页号检查
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="数字化情况检查" name="c6"> 数字化情况检查
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="科研档案案卷目录检查" name="c7"> 科研档案案卷目录检查
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="页数画幅数汇总统计" name="c8"> 页数画幅数汇总统计
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="可用性检查" name="c9"> 可用性检查
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div style="width: 180px;margin: auto">
+                <input type="button" id="toCheckData" value="检查" class="btn btn-sm btn-success" style="width: 180px"/>
+            </div>
+        </div>
+    </aside>
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+    immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+
+<!-- jQuery 3 -->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Handlebars -->
+<script src="js/vendor/handlebars/handlebars.min-v4.1.2.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="js/dataTables.colReorder.min.js"></script>
+<script src="js/dataTables.buttons.min.js"></script>
+<script src="js/buttons.colVis.min.js"></script>
+<!-- Ztree -->
+<link rel="stylesheet" href="css/zTreeStyle.css">
+<script src="js/jquery.ztree.all.min.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+
+<script src="js/vendor/navigo/navigo.min.js"></script>
+
+<script src="js/vendor/axios/axios.min.js"></script>
+
+<script src="js/app.js"></script>
+<script src="plugins/layer/layer.js"></script>
+<script src="plugins/laydate/laydate.js"></script>
+<script src="js/ellipsis.js"></script>
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. -->
+<script>
+    $(function () {
+       //限定ztree高度
+       $("input[name*='Path']").bind("click",function () {
+           var typeName = this.name.replace("Path","");
+           typeName = typeName+"Tree";
+           var h;
+           if(typeName.indexOf("xml")!=-1){
+               //导入xml配置，由于是弹窗，offsetTop计算有问题，单独处理
+               h = $(window).height()-150;
+           }else{
+               h = $(window).height()-this.offsetTop-40;
+           }
+           $("#"+typeName).css('max-height',h);
+       });
+
+       $("input[id*='Clear']").bind("click",function () {
+           var typeName = this.id.replace("Clear","");
+           typeName = typeName+"Path";
+           $("input[name='"+typeName+"']").val("");
+       });
+    });
+
+    function importData(){
+        var xmlPath = $("input[name='xmlPath']").val();
+        $.ajax({
+            url: '/importData',
+            type: 'post',
+            data:{xmlPath:xmlPath},
+            success: function (data) {
+                if(data.msg=="OK"){
+                    layer.alert("操作成功");
+                }else{
+                    layer.alert(data.msg);
+                }
+            },
+            dataType: "json"
+        })
+    }
+
+    //单位是毫秒
+    setInterval("check()",1000);
+    function check() {
+        $.ajax({
+            url: '/zky/check/status',
+            type: 'post',
+            success: function (data) {
+                if (data == "0") {
+                    //$("#shade").remove();
+                    $("#toCheckData").removeAttr("disabled");
+                    $("#toCheckData").val("检查");
+                }else{
+                    /*if($("#shade").length==0){
+                        var shadeHeight = $('.content-wrapper').height();
+                        if(shadeHeight<$("#toCheckData").offset().top){
+                            shadeHeight = $("#toCheckData").offset().top;
+                        }
+                        $("<div id='shade' style='opacity:0.75;background:white;top:50px;position:absolute;width:100%;left:0;'><img style='top:35%;position:absolute;width:100%;left:0;' src='/images/loading.gif'/><h4 style='color: #0a0a0a;font-weight: bolder;margin-top: 172%;margin-left: 31%;position: absolute;'>数据分析中...</h4></div>").appendTo('#aa');
+                        $("#shade").height(shadeHeight + "px");
+                    }*/
+                    if(!$("#toCheckData").attr("disabled")){
+                        $("#toCheckData").attr("disabled","disabled");
+                        $("#toCheckData").val("数据分析中...");
+                    }
+                }
+            },
+            dataType: "text"
+        })
+    }
+
+    var setting = {
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        //回调
+        callback: {
+            onClick: zTreeOnClick
+        },
+        view: {
+            fontCss: {fontSize: "14px"}
+        }
+    };
+    var volSetting = {
+        async: {
+            enable: true,
+            url:"/tree/getChildrenNodes?type=2",
+            autoParam:["id","path"]
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        //回调
+        callback: {
+            beforeClick : ifFile,
+            onClick: volZtreeOnClick
+        },
+        view: {
+            fontCss: {fontSize: "14px"}
+        }
+    };
+    var fileSetting = {
+        async: {
+            enable: true,
+            url:"/tree/getChildrenNodes?type=2",
+            autoParam:["id","path"]
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        //回调
+        callback: {
+            beforeClick : ifFile,
+            onClick: fileZtreeOnClick
+        },
+        view: {
+            fontCss: {fontSize: "14px"}
+        }
+    };
+    var efileSetting = {
+        async: {
+            enable: true,
+            url:"/tree/getChildrenNodes?type=1",
+            autoParam:["id","path"]
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        //回调
+        callback: {
+            onClick: efileZtreeOnClick
+        },
+        view: {
+            fontCss: {fontSize: "14px"}
+        }
+    };
+    var xmlSetting = {
+        async: {
+            enable: true,
+            url:"/tree/getChildrenNodes?type=1",
+            autoParam:["id","path"]
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        //回调
+        callback: {
+            onClick: xmlZtreeOnClick
+        },
+        view: {
+            fontCss: {fontSize: "14px"}
+        }
+    };
+    var sipSetting = {
+        async: {
+            enable: true,
+            url:"/tree/getChildrenNodes?type=2",
+            autoParam:["id","path"]
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        //回调
+        callback: {
+            onClick: sipZtreeOnClick
+        },
+        view: {
+            fontCss: {fontSize: "14px"}
+        }
+    };
+
+    /*var zNodes = [
+        {
+            name: "test1", open: true, children: [
+                {name: "test1_1"}, {name: "test1_2"}]
+        },
+        {
+            name: "test2", open: true, children: [
+                {name: "test2_1"}, {name: "test2_2"}]
+        }
+    ];*/
+
+    function ifFile(event, treeId, treeNode) {
+        if(treeId.isParent){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    //节点点击事件
+    function zTreeOnClick(event, treeId, treeNode) {
+        $("input[name='libcode']").val(treeNode.id);
+        $("#libcode").val(treeNode.name);
+        hideTree();
+    };
+    function volZtreeOnClick(event, treeId, treeNode) {
+        $("input[name='volPath']").val(treeNode.path);
+        hideTree();
+    };
+    function fileZtreeOnClick(event, treeId, treeNode) {
+        $("input[name='filePath']").val(treeNode.path);
+        hideTree();
+    };
+    function efileZtreeOnClick(event, treeId, treeNode) {
+        $("input[name='efilePath']").val(treeNode.path);
+        hideTree();
+    };
+    function xmlZtreeOnClick(event, treeId, treeNode) {
+        $("input[name='xmlPath']").val(treeNode.path);
+        hideTree();
+    };
+    function sipZtreeOnClick(event, treeId, treeNode) {
+        $("input[name='sipPath']").val(treeNode.path);
+        hideTree();
+    };
+
+    //下拉框显示 隐藏
+    function showTree() {
+        if ($('#arcTree').css('display') == 'none') {
+            $('#arcTree').css('display', 'block');
+        } else {
+            $('#arcTree').css('display', 'none');
+        }
+        $("body").bind("mousedown", onBodyDownByActionType);
+    }
+    function showVolTree() {
+        if ($('#volTreeDiv').css('display') == 'none') {
+            $('#volTreeDiv').css('display', 'block');
+        } else {
+            $('#volTreeDiv').css('display', 'none');
+        }
+        $("body").bind("mousedown", onBodyDownByActionType);
+    }
+    function showFileTree() {
+        if ($('#fileTreeDiv').css('display') == 'none') {
+            $('#fileTreeDiv').css('display', 'block');
+        } else {
+            $('#fileTreeDiv').css('display', 'none');
+        }
+        $("body").bind("mousedown", onBodyDownByActionType);
+    }
+    function showEfileTree() {
+        if ($('#efileTreeDiv').css('display') == 'none') {
+            $('#efileTreeDiv').css('display', 'block');
+        } else {
+            $('#efileTreeDiv').css('display', 'none');
+        }
+        $("body").bind("mousedown", onBodyDownByActionType);
+    }
+    function showXmlTree() {
+        if ($('#xmlTreeDiv').css('display') == 'none') {
+            $('#xmlTreeDiv').css('display', 'block');
+        } else {
+            $('#xmlTreeDiv').css('display', 'none');
+        }
+        $("body").bind("mousedown", onBodyDownByActionType);
+    }
+    function showSipTree() {
+        if ($('#sipTreeDiv').css('display') == 'none') {
+            $('#sipTreeDiv').css('display', 'block');
+        } else {
+            $('#sipTreeDiv').css('display', 'none');
+        }
+        $("body").bind("mousedown", onBodyDownByActionType);
+    }
+
+    function hideTree() {
+        $('.ztree').css('display', 'none');
+        $("body").unbind("mousedown", onBodyDownByActionType);
+        return false;
+    }
+
+    //区域外点击事件
+    function onBodyDownByActionType(event) {
+        if (event.target.id.indexOf('tree') == -1 && event.target.id.indexOf('Tree') == -1) {
+            if (event.target.id != 'selectDevType') {
+                hideTree();
+            }
+        }
+    }
+
+    $(document).ready(function () {
+        $("#sipDiv").hide();
+        $.ajax({
+            url: '/tree/getArcTree',
+            type: 'post',
+            success: function (data) {
+                zTreeObj = $.fn.zTree.init($("#tree"), setting, data);
+            },
+            dataType: "json"
+        })
+        $.ajax({
+            url: '/tree/getDiskRootTree',
+            type: 'post',
+            success: function (data) {
+                volZTreeObj = $.fn.zTree.init($("#volTree"), volSetting, data);
+                fileZTreeObj = $.fn.zTree.init($("#fileTree"), fileSetting, data);
+                sipZTreeObj = $.fn.zTree.init($("#sipTree"), sipSetting, data);
+            },
+            dataType: "json"
+        })
+        $.ajax({
+            url: '/tree/getDiskRootTree',
+            type: 'post',
+            success: function (data) {
+                efileZTreeObj = $.fn.zTree.init($("#efileTree"), efileSetting, data);
+                efileZTreeObj = $.fn.zTree.init($("#xmlTree"), xmlSetting, data);
+            },
+            dataType: "json"
+        })
+        $("#libcode").click(function () {
+            showTree();
+        });
+        $("input[name='volPath']").click(function () {
+            showVolTree();
+        });
+        $("input[name='filePath']").click(function () {
+            showFileTree();
+        });
+        $("input[name='efilePath']").click(function () {
+            showEfileTree();
+        });
+        $("input[name='xmlPath']").click(function () {
+            showXmlTree();
+        });
+        $("input[name='sipPath']").click(function () {
+            showSipTree();
+        });
+
+
+        $("input[name='isSip']").click(function () {
+            if($(this).val()==1){
+                //是
+                $("#fileDiv").hide();
+                $("#volDiv").hide();
+                $("#efileDiv").hide();
+                $("#sipDiv").show();
+            }else {
+                $("#sipDiv").hide();
+                $("#fileDiv").show();
+                $("#volDiv").show();
+                $("#efileDiv").show();
+            }
+        });
+        $("#toCheckData").click(function () {
+            var s = $("#checkForm").serialize();
+            $.ajax({
+                url:'/zky/check/excel',
+                type:'post',
+                data:s,
+                success:function(res){
+                    if(res=="ok"){
+                        layer.alert("操作成功");
+                    }else{
+                        /*var width = document.body.clientWidth;
+                        var height = document.body.clientHeight;
+                        layer.alert(res,{
+                            offset: [((height/2)-100)+'px', (width-190)+'px']
+                        });*/
+                        layer.alert(res);
+                    }
+                },
+                datatype:'text'
+            })
+            //表单验证
+            /*var file = $("#dataFile")[0].files[0];
+            var dir = $("#dataDir")[0].files;
+            if(file!=null){
+                var formData = new FormData();
+                formData.append("uploadFile",file);
+                formData.append("uploadDir",dir);
+                var ext = file.name.split(".")[1];
+                var width = document.body.clientWidth;
+                var height = document.body.clientHeight;
+                if(".xls,.xlsx,.zip".indexOf(ext)==-1){
+                    layer.msg('文件格式错误！',{
+                        offset: [((height/2)-100)+'px', (width-190)+'px']
+                    });
+                    return false;
+                }
+                $.ajax({
+                    url:'/zky/upload',
+                    type:'post',
+                    data:formData,
+                    contentType: false,
+                    processData: false,
+                    success:function(res){
+                        $("#dataFilePath").val(res);
+                    }
+                })
+            }*/
+
+        });
+    });
+</script>
+</body>
+</html>
